@@ -1,9 +1,12 @@
 package mapper;
 
+import bean.RecordEntity;
 import bean.UserEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public interface UserMapper {
@@ -16,4 +19,10 @@ public interface UserMapper {
 
     @Insert("insert into user(name,pwd,email,avatar) values (#{name},#{pwd},#{email},#{avatar})")
     public int insertUser(UserEntity user);
+
+    @Insert("insert into record(userId,gameId,date,time,status) values (#{userId},#{gameId},#{date},#{time},#{status})")
+    public int insertRecord(RecordEntity record);
+
+    @Select("select * from record where userId = #{userId}")
+    public List<RecordEntity> selectRecordsByUserId(int userId);
 }

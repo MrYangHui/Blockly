@@ -1,9 +1,11 @@
 package controller;
 
+import bean.RecordEntity;
 import bean.UserEntity;
 import bean.messageBean.InformationMessage;
 import bean.messageBean.LoginMessage;
 import bean.messageBean.Message;
+import bean.messageBean.RecordMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -24,7 +27,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/data/user/register",method = RequestMethod.POST)
-    public Message signin(@RequestParam(value = "userName",required = false) String name,
+    public Message register(@RequestParam(value = "userName",required = false) String name,
                          @RequestParam(value = "password",required = false) String pwd){
         Message message = new Message();
         if(name == null || pwd == null || "".equals(name) || "".equals(pwd)){
@@ -63,7 +66,6 @@ public class UserController {
             message.setMessage("用户不存在。");
             return message;
         }
-        System.out.println(session.getAttribute("user"));
         UserEntity user = userService.selectUserByName(name);
         if(user.getPwd().equals(pwd)){
             session.setAttribute("userId",user.getId());  //用session保存了登录的用户
@@ -106,5 +108,44 @@ public class UserController {
         message.setResult(false);
         message.setMessage("用户未登录。");
         return message;
+    }
+
+    @RequestMapping(value = "/data/user/record",method = RequestMethod.POST)
+    public Message record(@RequestParam(value = "userId") int userId,
+                          @RequestParam(value = "gameId") int gameId,
+                          @RequestParam(value = "date") String date,
+                          @RequestParam(value = "time") String time,
+                          @RequestParam(value = "status") boolean status){
+        RecordEntity record = new RecordEntity();
+        record.setUserId(userId);
+        record.setGameId(gameId);
+        record.setDate(date);
+        record.setTime(time);
+        record.setStatus(status);
+
+        Message message = new Message();
+        if(userService.insertRecord(record) != 0){
+            message.setResult(true);
+            return message;
+        }
+        message.setResult(false);
+        return message;
+    }
+
+    @RequestMapping(value = "/data/user/record",method = RequestMethod.GET)
+    public Message record(HttpSession session){
+        if(session.getAttribute("userId") == null){
+            Message message = new Message();
+            message.setResult(false);
+            message.setMessage("用户未登录。");
+            return message;
+        }else {
+            int userId = (int)session.getAttribute("userId");
+            List<RecordEntity> records = userService.selectRecordsByUserId(userId);
+            RecordMessage recordMessage = new RecordMessage();
+            recordMessage.setRecords(records);
+            recordMessage.setResult(true);
+            return recordMessage;
+        }
     }
 }

@@ -12,9 +12,16 @@
         <input type="submit">
     </form>
 
-    <form method="get" action="http://localhost:8080/data/user/information">
-        <input type="text" name="userName">
-        <input type="password" name="password">
+    <form method="post" action="http://localhost:8080/data/game/save">
+        <input type="number" name="userId">
+        <input type="number" name="gameId">
+        <input type="text" name="history">
+        <input type="submit">
+    </form>
+
+    <form method="get" action="http://localhost:8080/data/game/load">
+        <input type="number" name="userId">
+        <input type="number" name="gameId">
         <input type="submit">
     </form>
 
