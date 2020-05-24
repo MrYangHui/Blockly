@@ -111,25 +111,33 @@ public class UserController {
     }
 
     @RequestMapping(value = "/data/user/record",method = RequestMethod.POST)
-    public Message record(@RequestParam(value = "userId") int userId,
+    public Message record(HttpSession session,
                           @RequestParam(value = "gameId") int gameId,
                           @RequestParam(value = "date") String date,
                           @RequestParam(value = "time") String time,
                           @RequestParam(value = "status") boolean status){
-        RecordEntity record = new RecordEntity();
-        record.setUserId(userId);
-        record.setGameId(gameId);
-        record.setDate(date);
-        record.setTime(time);
-        record.setStatus(status);
+        if(session.getAttribute("userId") == null){
+            Message message = new Message();
+            message.setResult(false);
+            message.setMessage("用户未登录。");
+            return message;
+        }else {
+            int userId = (int)session.getAttribute("userId");
+            RecordEntity record = new RecordEntity();
+            record.setUserId(userId);
+            record.setGameId(gameId);
+            record.setDate(date);
+            record.setTime(time);
+            record.setStatus(status);
 
-        Message message = new Message();
-        if(userService.insertRecord(record) != 0){
-            message.setResult(true);
+            Message message = new Message();
+            if(userService.insertRecord(record) != 0){
+                message.setResult(true);
+                return message;
+            }
+            message.setResult(false);
             return message;
         }
-        message.setResult(false);
-        return message;
     }
 
     @RequestMapping(value = "/data/user/record",method = RequestMethod.GET)

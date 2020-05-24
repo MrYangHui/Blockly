@@ -19,11 +19,52 @@
         <input type="submit">
     </form>
 
-    <form method="get" action="http://localhost:8080/data/game/load">
-        <input type="number" name="userId">
-        <input type="number" name="gameId">
-        <input type="submit">
-    </form>
 
+    <input type="text" id="connectionParam">
+    <button id="button1">建立websocket连接</button>
+    <br>
+    <button id="button2">发送消息</button>
+    <div id="message"></div>
 </body>
+<script type="text/javascript">
+    var button1 = document.getElementById("button1");
+    var button2 = document.getElementById("button2");
+    button1.onclick = click1;
+    button2.onclick = click2;
+    var ws;
+
+    function click1() {
+        alert(1);
+        if ("WebSocket" in window){
+            ws = new WebSocket("ws://localhost:8080/room/"+document.getElementById("connectionParam").value);
+
+            ws.onopen = function() {
+                console.log("websocket已打开");
+                //socket.send("这是来自客户端的消息" + location.href + new Date());
+            };
+            //获得消息事件
+            ws.onmessage = function(msg) {
+                console.log(msg.data);
+                //发现消息进入    开始处理前端触发逻辑
+            };
+            //关闭事件
+            ws.onclose = function() {
+                console.log("websocket已关闭");
+            };
+            //发生了错误事件
+            ws.onerror = function() {
+                console.log("websocket发生了错误");
+            }
+        }
+    }
+
+    function click2() {
+        if(ws !== null){
+            ws.send("这是一条消息.");
+        }
+    }
+
+
+
+</script>
 </html>

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"service.**","controller.**"})
+@ComponentScan(basePackages = {"service.**","controller.**","config.**","aspect.**","listener.**"})
 @MapperScan("mapper")
 @RestController
 public class BlocklyApplication {

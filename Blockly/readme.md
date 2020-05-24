@@ -2,9 +2,14 @@
 (目前完成注册和登录)
 (根据文档修改了访问地址、请求方式和返回信息,修改了数据库新增头像图片路径和邮箱地址,新增查看个人信息请求处理)
 (前后端接口文档:https://www.zybuluo.com/lishuyang/note/1697828)
-5.10
+- 5.10
 (实现了剩余接口中的, record, save 和 load)
 (新增2个数据表保存record和history, 可以使用sql目录下的文件创建相应的数据表)
+- 5.24
+(修改了 添加用户操作记录、存储历史场景、加载历史场景 三个接口,现在userId将从session中取得,未登录无法获得userId将操作失败)
+(使用websocket实现了房间的功能, 使用的请求方式为ws://localhost:8080/room/{connectParam}, 与接口文档的http请求方式不同!!)
+
+
 
 ### 数据库
 - 使用mysql数据库, 请先自行安装mysql并创建名为"blockly"的数据库
@@ -77,7 +82,22 @@
 #### 加载历史场景
 - 映射地址为"/data/game/load", 即访问"http://localhost:port/data/game/load"
 - 请求方式为get
-- 参数 userId, gameId
+- 参数gameId (现在userId从session中取得)
 - 查询对应的history并返回给前端即可, 没有对应记录返回空字符串""
 
+
+### 房间相关
+(使用springboot websocket, 不知道实现是否合理, 有任何问题请前端即时反馈!!)
+
+以下两个接口的访问地址相同ws://localhost:8080/room/{connectParam} ,用connectParam参数做区别
+#### 创建房间
+- connectParam为gameId即一个整数时, 例如ws://localhost:8080/room/{1} ,创建一个该游戏的房间
+- 创建成功时, 服务器将通过websocket连接返回房间的Id, 该Id是一个随机生成的8位字母和数字的组合字符串
+
+
+#### 加入房间
+- connectParam为roomId即一个长度为8的字母和数字的组合字符串时, 例如ws://localhost:8080/room/{abcd1234} ,加入该id对应的游戏房间
+- 一个房间只能加入2人, 成功时返回信息"连接成功。",房间不存在或者已有2人加入, 将连接失败并得到对应的提示
+- 加入房间后, 两用户通过websocket发送的消息，会通过服务器转发给对方, 以此为前端提供一人的操作被另一人共享的功能
+- 因为目前websocket服务器的消息发送均是字符形式, 所以需要前端判断收到消息内容, 如果无法正常使用房间相关的公共请及时反馈!!
 

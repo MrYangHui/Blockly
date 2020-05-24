@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>GetUserMedia实例</title>
+</head>
+<body>
+<video class="local" autoplay style="transform: rotateY(180deg);"></video>
+</body>
+
+<script type="text/javascript">
+    var localVideo        = document.querySelector("video.local");
+    //var remoteVideo        = document.querySelector("video.local");
+    var localMediaStream  = null;
+    //var remoteMediaStream = null;
+
+    function getUserMedia(callback) {
+        if (navigator.getUserMedia === undefined) {
+            navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+            if (navigator.getUserMedia === undefined) {
+                console.error('getUserMedia not supported.');
+                return false;
+            }
+        }
+        navigator.getUserMedia({ video: true, audio: true }, callback, function(e) {
+            console.error('getUserMedia failed: ' + e.message);
+        });
+    }
+    getUserMedia(function(stream) {
+        localMediaStream = stream;
+        localVideo.srcObject = localMediaStream;
+        //peerConnection.addStream(stream);
+    });
+
+// 建立一个 RTCPeerConnection 实例，这里设置了 STUN 或 TURN 服务器
+//var servers = {
+//    'iceServers': [
+//        {
+//            'url': 'stun:stun1.l.google.com:19302'
+//        }
+//    ]
+//};
+//peerConnection = new RTCPeerConnection(servers);
+//
+//// 交换 ICE 候选，通过 WebSocket 发送
+//peerConnection.onicecandidate = function (e) {
+//    if (e.candidate) {
+//        console.log(['ICE candidate', e.candidate]);
+//        socket.emit('message', roomToken, {
+//            'candidate': e.candidate
+//        });
+//    }
+//};
+//
+//// 接收到对方添加的视频流时，显示在本地的 <video> 标签中
+//peerConnection.onaddstream = function (e) {
+//    remoteMediaStream = e.stream;
+//    remoteVideo.srcObject = remoteMediaStream;
+//};
+//
+//// 在这里添加上一篇文章中获取到的本地视频流
+//
+//
+//
+//
+//// 包装一个 Offer
+//peerConnection.createOffer(gotLocalDescription, handleError);
+//
+//var socket = new WebSocket("ws://localhost:8080");
+//
+//// 有了 Offer，通过 WebSocket 发送给对方
+//function gotLocalDescription(desc) {
+//    peerConnection.setLocalDescription(desc);
+//    socket.emit('message', roomToken, {
+//        'sdp': desc
+//    });
+//}
+//
+//// 在 WebSocket 中接收到信息时
+//socket.on('message', function (message, socketId) {
+//    if (message.sdp) {
+//        // 接收到 Offer 时，创建 Answer 并发送
+//        var desc = new RTCSessionDescription(message.sdp);
+//        peerConnection.setRemoteDescription(desc, function () {
+//            peerConnection.createAnswer(gotLocalDescription, handleError);
+//        }, handleError);
+//    } else {
+//        // 接收到 ICE 候选时，让 RTCPeerConnection 收集它，稍后它将在这些候选方式中挑选最佳者建立连接
+//        // 注意：RTCPeerConnection 要在 setLocalDescription 后才能开始收集 ICE 候选
+//        peerConnection.addIceCandidate(new RTCIceCandidate(message.candidate));
+//    }
+//});
+//function handleError() {
+//    console.log(1);
+//}
+</script>
+
+
+</html>
