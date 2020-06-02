@@ -1,1 +1,25 @@
-<p>vedio-room works!</p>
+<!--<link rel="stylesheet" href="./index.css">-->
+
+<div class="video-room">
+  <div class="room-number-container">
+    <p id="room-number"></p>
+  </div>
+
+  <video class="video-window" id="remote-video" autoplay=""></video>
+  <video class="video-window" id="local-video" autoplay=""></video>
+
+  <div id="button-bar">
+    <button type="button" class="video-button" onclick="createRoom()"> Create Room </button>
+    <button type="button" class="video-button" onclick="connectRoom()"> Connect Room </button>
+  </div>
+
+  <div class="users-container">
+    <ul id="login-users"></ul>
+  </div>
+
+</div>
+<script src="./index.js"></script>
+<script src="./socket.io.js"></script>
+<script src="./client.js"></script>
+
+
