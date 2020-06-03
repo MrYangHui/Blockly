@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   // javaScriptUrls:['./client.js', './index.js', 'socket.io.js'],
   styleUrls: ['./vedio-room.component.css']
 })
-export class VedioRoomComponent implements OnInit {
+export class VideoRoomComponent implements OnInit {
 
   constructor() { }
 

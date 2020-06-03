@@ -54,13 +54,13 @@
               "src/styles.css"
             ],
             "scripts": [
+              "src/app/components/video-room/socket.io.js",
+              "src/app/components/video-room/client.js",
+              "src/app/components/video-room/index.js",
               "node_modules/blockly/blockly.js",
               "node_modules/blockly/blocks.js",
               "node_modules/blockly/javascript.js",
-              "src/assets/blockly/custom_block.js",
-              "src/app/components/vedio-room/socket.io.js",
-              "src/app/components/vedio-room/client.js",
-              "src/app/components/vedio-room/index.js"
+              "src/assets/blockly/custom_block.js"
             ]
           },
           "configurations": {

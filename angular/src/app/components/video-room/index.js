@@ -33,7 +33,8 @@ function createRoom() {
     var roomName = loginRoom();
     displayRoomId(roomName);
     hideButtonBar();
-    window.alert(`Room Created!\nRoom ID:\n ${userName}`);
+    hideUsersUl();
+    window.alert(`Room Created!\nRoom ID:\n ${roomName}`);
 }
 
 function connectRoom() {
@@ -46,7 +47,7 @@ function overLi(evt) {
     li.style.setProperty('background-color', '#ffffff');
     li.style.setProperty('color', '#3f51b5');
     li.style.setProperty('font-weight', 'bold');
-    li.style.setProperty('height', '120%');    
+    li.style.setProperty('height', '120%');
 }
 
 function outLi(evt) {
@@ -54,5 +55,5 @@ function outLi(evt) {
     li.style.setProperty('background-color', '#3f51b5');
     li.style.setProperty('color', '#ffffff');
     li.style.setProperty('font-weight', 'normal');
-    li.style.setProperty('height', '100%');   
+    li.style.setProperty('height', '100%');
 }

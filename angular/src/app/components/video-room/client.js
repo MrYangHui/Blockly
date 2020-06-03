@@ -1,5 +1,6 @@
 // const socket = io.connect('http://localhost:3000');
-const socket = io.connect('http://ec2-3-86-88-216.compute-1.amazonaws.com:8080');
+// const socket = io.connect('http://ec2-3-86-88-216.compute-1.amazonaws.com:8080');
+const socket = io.connect('http://49.235.35.92:8759');
 
 const CLIENT_RTC_EVENT = 'CLIENT_RTC_EVENT';
 const SERVER_RTC_EVENT = 'SERVER_RTC_EVENT';

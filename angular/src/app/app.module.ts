@@ -31,7 +31,7 @@ import { QuickStartComponent } from './components/quick-start/quick-start.compon
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { VedioRoomComponent } from './components/vedio-room/vedio-room.component';
+import { VideoRoomComponent } from './components/video-room/video-room.component';
 import { AnimationComponent } from './components/animation/animation.component';
 
 
@@ -48,7 +48,7 @@ import { AnimationComponent } from './components/animation/animation.component';
     RegisterComponent,
     QuickStartComponent,
     UserInfoComponent,
-    VedioRoomComponent,
+    VideoRoomComponent,
     AnimationComponent,
   ],
   imports: [
